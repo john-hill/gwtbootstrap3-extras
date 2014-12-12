@@ -52,6 +52,7 @@ public class Select extends ComplexWidget implements Focusable, HasEnabled {
     private static final String REFRESH = "refresh";
     private static final String RENDER = "render";
     private static final String SHOW = "show";
+    private static final String DESTROY = "destroy";
     private static final String HIDE = "hide";
     private static final String SELECT_ALL = "selectAll";
     private static final String DESELECT_ALL = "deselectAll";
@@ -71,6 +72,13 @@ public class Select extends ComplexWidget implements Focusable, HasEnabled {
         super.onLoad();
 
         initialize();
+    }
+
+    @Override
+    protected void onUnload(){
+        super.onUnload();
+        // If destroy is not called the widget will not be removed from its container.
+        destroy();
     }
 
     public HandlerRegistration addChangeHandler(final ChangeHandler handler) {
@@ -326,6 +334,10 @@ public class Select extends ComplexWidget implements Focusable, HasEnabled {
 
     public void show() {
         command(getElement(), SHOW);
+    }
+    
+    private void destroy() {
+        command(getElement(), DESTROY);
     }
 
     private void initialize() {
